@@ -1,0 +1,210 @@
+<script>
+(function() {
+
+  /* ══════════════════════════════════════
+     CANVAS JELLYFISH ANIMATION
+  ══════════════════════════════════════ */
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function randBetween(a, b) { return a + Math.random() * (b - a); }
+
+  function createJellyfish() {
+    const hue = randBetween(185, 235);
+    const numTentacles = Math.floor(randBetween(6, 11));
+    return {
+      x: randBetween(0.05, 0.95),
+      y: randBetween(1.05, 1.8),
+      vy: randBetween(0.00018, 0.00038),
+      vx: randBetween(-0.00008, 0.00008),
+      r: randBetween(22, 52),
+      alpha: randBetween(0.15, 0.35),
+      hue: hue,
+      sat: Math.round(randBetween(55, 70)),
+      lit: Math.round(randBetween(72, 88)),
+      pulse: randBetween(0, Math.PI * 2),
+      pulseSpeed: randBetween(0.012, 0.028),
+      driftPhase: randBetween(0, Math.PI * 2),
+      driftSpeed: randBetween(0.006, 0.016),
+      driftAmp: randBetween(0.008, 0.022),
+      tentacles: Array.from({length: numTentacles}, (_, i) => ({
+        angle: (i / numTentacles) * Math.PI,
+        length: randBetween(30, 75),
+        phase: randBetween(0, Math.PI * 2),
+        speed: randBetween(0.018, 0.04),
+        amp: randBetween(8, 20),
+      })),
+    };
+  }
+
+  const COUNT = 20;
+  let jellies = Array.from({length: COUNT}, () => {
+    const j = createJellyfish();
+    j.y = randBetween(-0.2, 1.1);
+    return j;
+  });
+
+  let t = 0;
+
+  function drawJellyfish(j) {
+    const cx = j.x * canvas.width;
+    const cy = j.y * canvas.height;
+    const pulse = 1 + 0.06 * Math.sin(j.pulse);
+    const r = j.r * pulse;
+
+    ctx.save();
+    ctx.globalAlpha = j.alpha;
+
+    const col = `hsl(${j.hue}, ${j.sat}%, ${j.lit}%)`;
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, Math.PI, 0, false);
+    ctx.closePath();
+
+    const grad = ctx.createRadialGradient(cx, cy - r * 0.3, r * 0.05, cx, cy, r);
+    grad.addColorStop(0, `hsla(${j.hue}, ${j.sat}%, ${Math.min(j.lit + 10, 96)}%, 0.55)`);
+    grad.addColorStop(0.7, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.2)`);
+    grad.addColorStop(1, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.05)`);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * 0.65, Math.PI, 0, false);
+    ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.3)`;
+    ctx.lineWidth = 0.6;
+    ctx.stroke();
+
+    ctx.lineWidth = 0.7;
+    j.tentacles.forEach(ten => {
+      const startAngle = Math.PI + ten.angle;
+      const ox = cx + r * Math.cos(startAngle);
+      const oy = cy + r * Math.sin(startAngle);
+      const wave = Math.sin(t * ten.speed + ten.phase);
+      const wave2 = Math.sin(t * ten.speed * 1.4 + ten.phase + 1.2);
+      const cp1x = ox + wave * ten.amp * 1.2;
+      const cp1y = oy + ten.length * 0.35;
+      const cp2x = ox + wave2 * ten.amp;
+      const cp2y = oy + ten.length * 0.7;
+      const ex = ox + wave * ten.amp * 0.5;
+      const ey = oy + ten.length;
+
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
+      ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.45)`;
+      ctx.stroke();
+    });
+
+    ctx.restore();
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    t++;
+    jellies.forEach(j => {
+      j.driftPhase += j.driftSpeed;
+      j.x += Math.sin(j.driftPhase) * j.driftAmp * 0.012;
+      j.y -= j.vy;
+      j.pulse += j.pulseSpeed;
+      if (j.y < -0.25) {
+        j.y = randBetween(1.05, 1.5);
+        j.x = randBetween(0.05, 0.95);
+      }
+      if (j.x < 0) j.x = 0.01;
+      if (j.x > 1) j.x = 0.99;
+      drawJellyfish(j);
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  /* ══════════════════════════════════════
+     CUSTOM CURSOR
+  ══════════════════════════════════════ */
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top = my + 'px';
+  });
+
+  function animateCursor() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .work-card, .tag').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '44px';
+      ring.style.height = '44px';
+      ring.style.borderColor = 'rgba(168,197,212,0.7)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '28px';
+      ring.style.height = '28px';
+      ring.style.borderColor = 'rgba(168,197,212,0.5)';
+    });
+  });
+
+  /* ══════════════════════════════════════
+     LANGUAGE SWITCH
+  ══════════════════════════════════════ */
+  let lang = 'en';
+  const btn = document.getElementById('lang-btn');
+
+  function applyLang() {
+    document.querySelectorAll('[data-en][data-zh]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.innerHTML = val;
+    });
+    document.querySelectorAll('.lang-en, .lang-zh').forEach(el => {
+      el.style.display = el.classList.contains('lang-' + lang) ? 'block' : 'none';
+    });
+    btn.textContent = lang === 'en' ? '中文' : 'EN';
+    document.documentElement.lang = lang === 'en' ? 'en' : 'zh';
+  }
+
+  btn.addEventListener('click', () => {
+    lang = lang === 'en' ? 'zh' : 'en';
+    applyLang();
+  });
+
+  /* ══════════════════════════════════════
+     SCROLL FADE-IN
+  ══════════════════════════════════════ */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.about-left, .about-right, .work-card, .post-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+    observer.observe(el);
+  });
+
+})();
+</script>

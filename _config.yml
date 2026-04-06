@@ -1,0 +1,28 @@
+title: prettyjellyfish
+url: "https://prettyjellyfish.com"
+baseurl: ""
+
+permalink: /writing/:year/:slug/
+
+# Collections
+collections:
+  work:
+    output: true
+    permalink: /work/:slug/
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: work
+    values:
+      layout: work
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

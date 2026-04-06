@@ -1,132 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪼</text></svg>">
-<title>prettyjellyfish</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #07090f;
-    --bg2: #0c0f1a;
-    --text: #d4cfc8;
-    --text-dim: #7a7870;
-    --accent: #a8c5d4;
-    --accent2: #8fb3c5;
-    --border: rgba(168, 197, 212, 0.12);
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'Jost', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-weight: 300;
-    font-size: 15px;
-    line-height: 1.75;
-    cursor: none;
-    overflow-x: hidden;
-  }
-
-  /* ── CANVAS ── */
-  #bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  /* ── CUSTOM CURSOR ── */
-  #cursor-dot, #cursor-ring {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s;
-  }
-  #cursor-dot {
-    width: 5px; height: 5px;
-    background: var(--accent);
-    top: 0; left: 0;
-  }
-  #cursor-ring {
-    width: 28px; height: 28px;
-    border: 1px solid rgba(168, 197, 212, 0.5);
-    top: 0; left: 0;
-    transition: width 0.2s, height 0.2s, border-color 0.2s;
-  }
-
-  /* ── LAYOUT ── */
-  #page {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 28px 48px;
-    background: linear-gradient(to bottom, rgba(7,9,15,0.85) 0%, transparent 100%);
-    backdrop-filter: blur(0px);
-  }
-
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-  }
-
-  .nav-link {
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .nav-link:hover { color: var(--text); }
-
-  #lang-btn {
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    background: none;
-    border: 1px solid var(--border);
-    padding: 6px 14px;
-    cursor: none;
-    transition: color 0.3s, border-color 0.3s;
-  }
-  #lang-btn:hover { color: var(--accent); border-color: rgba(168,197,212,0.3); }
-
+---
+layout: base
+extra_css: |
   /* ── HERO ── */
   #hero {
     min-height: 100vh;
@@ -135,6 +9,8 @@
     justify-content: center;
     padding: 0 48px;
     padding-top: 120px;
+    padding-bottom: 96px;
+    position: relative;
   }
 
   .hero-eyebrow {
@@ -210,9 +86,7 @@
   }
 
   /* ── SECTIONS COMMON ── */
-  section {
-    padding: 120px 48px;
-  }
+  section { padding: 120px 48px; }
 
   .section-label {
     font-size: 11px;
@@ -263,9 +137,7 @@
     max-width: 440px;
   }
 
-  .about-right {
-    padding-top: 16px;
-  }
+  .about-right { padding-top: 16px; }
 
   .about-quote {
     font-family: var(--font-display);
@@ -280,11 +152,7 @@
     padding-left: 24px;
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; }
 
   .tag {
     font-size: 11px;
@@ -296,8 +164,6 @@
   }
 
   /* ── WORK ── */
-  #work {}
-
   .work-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -311,6 +177,9 @@
     transition: background 0.4s, border-color 0.4s;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    display: block;
+    color: inherit;
   }
 
   .work-card::before {
@@ -323,10 +192,7 @@
     transition: opacity 0.4s;
   }
 
-  .work-card:hover {
-    background: rgba(168,197,212,0.06);
-    border-color: rgba(168,197,212,0.2);
-  }
+  .work-card:hover { background: rgba(168,197,212,0.06); border-color: rgba(168,197,212,0.2); }
   .work-card:hover::before { opacity: 1; }
 
   .work-num {
@@ -346,6 +212,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
   }
 
   .work-placeholder span {
@@ -356,6 +223,16 @@
     opacity: 0.4;
     letter-spacing: 0.1em;
   }
+
+  .work-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    transition: opacity 0.4s;
+  }
+
+  .work-card:hover .work-placeholder img { opacity: 0.9; }
 
   .work-title {
     font-family: var(--font-display);
@@ -372,409 +249,173 @@
     color: var(--text-dim);
   }
 
-  /* ── FOOTER ── */
-  footer {
-    padding: 80px 48px 60px;
-    border-top: 1px solid var(--border);
+  /* ── WRITING PREVIEW ── */
+  #writing { background: linear-gradient(to bottom, transparent, rgba(168,197,212,0.02), transparent); }
+
+  .post-list { display: flex; flex-direction: column; gap: 0; }
+
+  .post-card {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    text-align: center;
+    align-items: baseline;
+    gap: 40px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.3s;
+  }
+  .post-card:first-child { border-top: 1px solid var(--border); }
+  .post-card:hover { padding-left: 12px; }
+
+  .post-date {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-width: 90px;
   }
 
-  .footer-logo {
+  .post-title {
     font-family: var(--font-display);
-    font-size: clamp(48px, 8vw, 110px);
+    font-size: 20px;
     font-weight: 300;
     font-style: italic;
-    color: rgba(168,197,212,0.08);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    user-select: none;
+    color: var(--text);
+    flex: 1;
   }
 
-  .footer-contact {
-    font-size: 12px;
-    letter-spacing: 0.18em;
+  .post-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .post-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-dim);
+    opacity: 0.6;
   }
 
-  .footer-email {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-style: italic;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  .footer-copy {
+  .section-cta {
+    margin-top: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-size: 11px;
-    letter-spacing: 0.12em;
-    color: rgba(122,120,112,0.4);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.3s;
   }
-
-  /* ── DIVIDER ── */
-  .divider {
-    width: 1px;
-    height: 60px;
+  .section-cta::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
     background: var(--border);
-    margin: 0 auto;
+    transition: width 0.3s;
   }
+  .section-cta:hover { color: var(--accent); }
+  .section-cta:hover::after { width: 60px; background: var(--accent); }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 24px 32px; }
     section { padding: 80px 32px; }
     #hero { padding: 0 32px; padding-top: 100px; }
     .hero-scroll { left: 32px; }
-    footer { padding: 60px 32px 48px; }
-
     .about-grid { grid-template-columns: 1fr; gap: 48px; }
     .work-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 600px) {
-    body { cursor: auto; font-size: 14px; }
-    #cursor-dot, #cursor-ring { display: none; }
-
-    nav { padding: 20px 20px; }
-    .nav-right { gap: 20px; }
-    .nav-link { display: none; }
-
     section { padding: 64px 20px; }
     #hero { padding: 0 20px; padding-top: 90px; }
     .hero-scroll { left: 20px; bottom: 32px; }
-    footer { padding: 48px 20px 40px; }
-
     .work-grid { grid-template-columns: 1fr; }
     .work-card { padding: 32px 24px; }
+    .post-card { gap: 16px; flex-wrap: wrap; }
+    .post-date { min-width: unset; }
   }
-</style>
-</head>
-<body>
+---
 
-<canvas id="bg"></canvas>
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow" data-en="— a floating world" data-zh="— 一个漂浮的世界">— a floating world</p>
+  <h1 class="hero-title">
+    pretty<br>
+    <em>jellyfish</em>
+  </h1>
+  <p class="hero-sub" data-en="somewhere between surface and deep" data-zh="在水面与深处之间">somewhere between surface and deep</p>
+  <div class="hero-poem">
+    <p data-en="I drift where the light forgets its name<br>and the dark learns to breathe." data-zh="我漂游在光忘记自己名字的地方<br>黑暗在那里学会了呼吸。">I drift where the light forgets its name<br>and the dark learns to breathe.</p>
+  </div>
+  <div class="hero-scroll" data-en="scroll" data-zh="向下">scroll</div>
+</section>
 
-<div id="page">
-  <!-- NAV -->
-  <nav>
-    <a href="#" class="nav-logo">prettyjellyfish</a>
-    <div class="nav-right">
-      <a href="#about" class="nav-link" data-en="About" data-zh="关于">About</a>
-      <a href="#work" class="nav-link" data-en="Work" data-zh="作品">Work</a>
-      <a href="#contact" class="nav-link" data-en="Contact" data-zh="联系">Contact</a>
-      <button id="lang-btn">中文</button>
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label" data-en="001 — about" data-zh="001 — 关于">001 — about</p>
+  <div class="about-grid">
+    <div class="about-left">
+      <h2 data-en="who<br>am I?" data-zh="我<br>是谁？">who<br>am I?</h2>
+      <p data-en="A creature of thresholds — living between languages, between hemispheres, between the world of data and the world of feeling. I make sense of systems so others don't have to hold the whole map alone." data-zh="我是边界的生物——生活在语言之间、半球之间、数据世界与感受世界之间。我理解系统的逻辑，这样别人就不必独自持有整张地图。">A creature of thresholds — living between languages, between hemispheres, between the world of data and the world of feeling. I make sense of systems so others don't have to hold the whole map alone.</p>
+      <p data-en="When I'm not untangling pipelines, I'm in the water. Swimming teaches me what stillness actually costs, and what it gives back." data-zh="当我不在梳理数据管道的时候，我在水里。游泳教会我静止真正的代价，以及它回馈的东西。">When I'm not untangling pipelines, I'm in the water. Swimming teaches me what stillness actually costs, and what it gives back.</p>
     </div>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <p class="hero-eyebrow" data-en="— a floating world" data-zh="— 一个漂浮的世界">— a floating world</p>
-    <h1 class="hero-title">
-      pretty<br>
-      <em>jellyfish</em>
-    </h1>
-    <p class="hero-sub" data-en="somewhere between surface and deep" data-zh="在水面与深处之间">somewhere between surface and deep</p>
-    <div class="hero-poem">
-      <p data-en="I drift where the light forgets its name<br>and the dark learns to breathe." data-zh="我漂游在光忘记自己名字的地方<br>黑暗在那里学会了呼吸。">I drift where the light forgets its name<br>and the dark learns to breathe.</p>
-    </div>
-    <div class="hero-scroll" data-en="scroll" data-zh="向下">scroll</div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-label" data-en="001 — about S" data-zh="001 — 关于S">001 — about S</p>
-    <div class="about-grid">
-      <div class="about-left">
-        <h2 data-en="who<br>am I?" data-zh="我<br>是谁？">who<br>is S?</h2>
-        <p data-en="A creature of thresholds — living between languages, between hemispheres, between the world of data and the world of feeling. I make sense of systems so others don't have to hold the whole map alone." data-zh="我是边界的生物——生活在语言之间、半球之间、数据世界与感受世界之间。我理解系统的逻辑，这样别人就不必独自持有整张地图。">A creature of thresholds — living between languages, between hemispheres, between the world of data and the world of feeling. I make sense of systems so others don't have to hold the whole map alone.</p>
-        <p data-en="When I'm not untangling data, I'm in the water. Swimming teaches me what stillness actually costs, and what it gives back." data-zh="当我不在数据里时候，我在水里。游泳教会我静止真正的代价，以及它回馈的东西。">When I'm not untangling data, I'm in the water. Swimming teaches me what stillness actually costs, and what it gives back.</p>
-      </div>
-      <div class="about-right">
-        <p class="about-quote" data-en="&ldquo;The jellyfish does not try to be translucent.<br>It simply is.&rdquo;" data-zh="&ldquo;水母不努力变得透明。<br>它本来就是。&rdquo;">&ldquo;The jellyfish does not try to be translucent.<br>It simply is.&rdquo;</p>
-        <div class="tags">
-          <span class="tag" data-en="water" data-zh="水">water</span>
-          <span class="tag" data-en="sound" data-zh="声音">sound</span>
-          <span class="tag" data-en="stillness" data-zh="静">stillness</span>
-          <span class="tag" data-en="translation" data-zh="翻译">translation</span>
-          <span class="tag" data-en="depth" data-zh="深度">depth</span>
-          <span class="tag" data-en="light" data-zh="光">light</span>
-        </div>
+    <div class="about-right">
+      <p class="about-quote" data-en="&ldquo;The jellyfish does not try to be translucent.<br>It simply is.&rdquo;" data-zh="&ldquo;水母不努力变得透明。<br>它本来就是。&rdquo;">&ldquo;The jellyfish does not try to be translucent.<br>It simply is.&rdquo;</p>
+      <div class="tags">
+        <span class="tag" data-en="water" data-zh="水">water</span>
+        <span class="tag" data-en="sound" data-zh="声音">sound</span>
+        <span class="tag" data-en="stillness" data-zh="静">stillness</span>
+        <span class="tag" data-en="translation" data-zh="翻译">translation</span>
+        <span class="tag" data-en="depth" data-zh="深度">depth</span>
+        <span class="tag" data-en="light" data-zh="光">light</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- WORK -->
-  <section id="work">
-    <p class="section-label" data-en="002 — work" data-zh="002 — 作品">002 — work</p>
-    <div class="work-grid">
-      <div class="work-card">
-        <p class="work-num">001</p>
-        <div class="work-placeholder"><span data-en="coming soon" data-zh="S真的很懒">coming soon</span></div>
-        <p class="work-title" data-en="Untitled I" data-zh="无题 I">Untitled I</p>
-        <p class="work-desc" data-en="data · systems · 202X" data-zh="数据 · 系统 · 202X">data · systems · 202X</p>
+<!-- WORK -->
+<section id="work">
+  <p class="section-label" data-en="002 — work" data-zh="002 — 作品">002 — work</p>
+  <div class="work-grid">
+    {% assign work_items = site.work | sort: 'order' %}
+    {% for item in work_items %}
+    <a class="work-card" href="{{ item.url }}" {% if item.coming_soon %}style="pointer-events:none"{% endif %}>
+      <p class="work-num">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</p>
+      <div class="work-placeholder">
+        {% if item.image %}
+          <img src="{{ item.image }}" alt="{{ item.title }}">
+        {% else %}
+          <span data-en="coming soon" data-zh="水母正在浮出水面">coming soon</span>
+        {% endif %}
       </div>
-      <div class="work-card">
-        <p class="work-num">002</p>
-        <div class="work-placeholder"><span data-en="coming soon" data-zh="S真的很懒">coming soon</span></div>
-        <p class="work-title" data-en="Untitled II" data-zh="无题 II">Untitled II</p>
-        <p class-desc" data-en="observation · writing · 202X" data-zh="观察 · 写作 · 2025">observation · writing · 202X</p>
-      </div>
-      <div class="work-card">
-        <p class="work-num">003</p>
-        <div class="work-placeholder"><span data-en="coming soon" data-zh="S真的很懒">coming soon</span></div>
-        <p class="work-title" data-en="Untitled III" data-zh="无题 III">Untitled III</p>
-        <p class="work-desc" data-en="translation · form · 202X" data-zh="翻译 · 形式 · 202X">translation · form · 202X</p>
-      </div>
-    </div>
-  </section>
+      <p class="work-title" data-en="{{ item.title }}" data-zh="{{ item.title_zh | default: item.title }}">{{ item.title }}</p>
+      <p class="work-desc" data-en="{{ item.desc }}" data-zh="{{ item.desc_zh | default: item.desc }}">{{ item.desc }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer id="contact">
-    <div class="footer-logo">prettyjellyfish</div>
-    <div class="divider"></div>
-    <p class="footer-contact" data-en="reach me at" data-zh="联系我">reach me at</p>
-    <p class="footer-email">lemonandautumn@gmail.com</p>
-    <p class="footer-copy" data-en="© 2026 prettyjellyfish — all rights reserved" data-zh="© 2026 prettyjellyfish — 保留所有权利">© 2026 prettyjellyfish — all rights reserved</p>
-  </footer>
-</div>
-
-<script>
-(function() {
-
-  /* ══════════════════════════════════════
-     CANVAS JELLYFISH ANIMATION
-  ══════════════════════════════════════ */
-  const canvas = document.getElementById('bg');
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  function randBetween(a, b) { return a + Math.random() * (b - a); }
-
-  function createJellyfish() {
-    const hue = randBetween(185, 235);
-    const numTentacles = Math.floor(randBetween(6, 11));
-    return {
-      x: randBetween(0.05, 0.95),          // fraction of canvas width
-      y: randBetween(1.05, 1.8),           // fraction of canvas height (start below)
-      vy: randBetween(0.00018, 0.00038),   // upward speed
-      vx: randBetween(-0.00008, 0.00008),  // drift
-      r: randBetween(22, 52),              // base radius
-      alpha: randBetween(0.15, 0.35),
-      hue: hue,
-      sat: Math.round(randBetween(55, 70)),
-      lit: Math.round(randBetween(72, 88)),
-      pulse: randBetween(0, Math.PI * 2),
-      pulseSpeed: randBetween(0.012, 0.028),
-      driftPhase: randBetween(0, Math.PI * 2),
-      driftSpeed: randBetween(0.006, 0.016),
-      driftAmp: randBetween(0.008, 0.022),
-      tentacles: Array.from({length: numTentacles}, (_, i) => ({
-        angle: (i / numTentacles) * Math.PI,  // spread across bottom semicircle
-        length: randBetween(30, 75),
-        phase: randBetween(0, Math.PI * 2),
-        speed: randBetween(0.018, 0.04),
-        amp: randBetween(8, 20),
-      })),
-    };
-  }
-
-  const COUNT = 20;
-  let jellies = Array.from({length: COUNT}, () => {
-    const j = createJellyfish();
-    // scatter initial positions across the screen
-    j.y = randBetween(-0.2, 1.1);
-    return j;
-  });
-
-  let t = 0;
-
-  function drawJellyfish(j) {
-    const cx = j.x * canvas.width;
-    const cy = j.y * canvas.height;
-
-    // pulse
-    const pulse = 1 + 0.06 * Math.sin(j.pulse);
-    const r = j.r * pulse;
-
-    ctx.save();
-    ctx.globalAlpha = j.alpha;
-
-    const col = `hsl(${j.hue}, ${j.sat}%, ${j.lit}%)`;
-    const colDim = `hsl(${j.hue}, ${j.sat}%, ${Math.max(j.lit - 20, 40)}%)`;
-
-    // ── Bell (top semicircle) ──
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, Math.PI, 0, false);   // top half
-    ctx.closePath();
-
-    // radial gradient fill
-    const grad = ctx.createRadialGradient(cx, cy - r * 0.3, r * 0.05, cx, cy, r);
-    grad.addColorStop(0, `hsla(${j.hue}, ${j.sat}%, ${Math.min(j.lit + 10, 96)}%, 0.55)`);
-    grad.addColorStop(0.7, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.2)`);
-    grad.addColorStop(1, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.05)`);
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    ctx.strokeStyle = col;
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    // ── Inner arc ──
-    ctx.beginPath();
-    ctx.arc(cx, cy, r * 0.65, Math.PI, 0, false);
-    ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.3)`;
-    ctx.lineWidth = 0.6;
-    ctx.stroke();
-
-    // ── Tentacles ──
-    ctx.lineWidth = 0.7;
-    j.tentacles.forEach(ten => {
-      const startAngle = Math.PI + ten.angle;   // bottom of bell
-      const ox = cx + r * Math.cos(startAngle);
-      const oy = cy + r * Math.sin(startAngle);
-
-      const wave = Math.sin(t * ten.speed + ten.phase);
-      const wave2 = Math.sin(t * ten.speed * 1.4 + ten.phase + 1.2);
-
-      // control points for bezier
-      const cp1x = ox + wave * ten.amp * 1.2;
-      const cp1y = oy + ten.length * 0.35;
-      const cp2x = ox + wave2 * ten.amp;
-      const cp2y = oy + ten.length * 0.7;
-      const ex = ox + wave * ten.amp * 0.5;
-      const ey = oy + ten.length;
-
-      ctx.beginPath();
-      ctx.moveTo(ox, oy);
-      ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
-      ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.45)`;
-      ctx.stroke();
-    });
-
-    ctx.restore();
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    t++;
-
-    jellies.forEach(j => {
-      // drift
-      j.driftPhase += j.driftSpeed;
-      j.x += Math.sin(j.driftPhase) * j.driftAmp * 0.012;
-      j.y -= j.vy;
-      j.pulse += j.pulseSpeed;
-
-      // reset when off top
-      if (j.y < -0.25) {
-        j.y = randBetween(1.05, 1.5);
-        j.x = randBetween(0.05, 0.95);
-      }
-      // keep in horizontal bounds
-      if (j.x < 0) j.x = 0.01;
-      if (j.x > 1) j.x = 0.99;
-
-      drawJellyfish(j);
-    });
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  /* ══════════════════════════════════════
-     CUSTOM CURSOR
-  ══════════════════════════════════════ */
-  const dot = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-
-  let mx = -100, my = -100;
-  let rx = -100, ry = -100;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top = my + 'px';
-  });
-
-  function animateCursor() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  document.querySelectorAll('a, button, .work-card, .tag').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      ring.style.width = '44px';
-      ring.style.height = '44px';
-      ring.style.borderColor = 'rgba(168,197,212,0.7)';
-    });
-    el.addEventListener('mouseleave', () => {
-      ring.style.width = '28px';
-      ring.style.height = '28px';
-      ring.style.borderColor = 'rgba(168,197,212,0.5)';
-    });
-  });
-
-  /* ══════════════════════════════════════
-     LANGUAGE SWITCH
-  ══════════════════════════════════════ */
-  let lang = 'en';
-  const btn = document.getElementById('lang-btn');
-
-  function applyLang() {
-    document.querySelectorAll('[data-en][data-zh]').forEach(el => {
-      const val = el.getAttribute('data-' + lang);
-      if (val !== null) el.innerHTML = val;
-    });
-    btn.textContent = lang === 'en' ? '中文' : 'EN';
-    document.documentElement.lang = lang === 'en' ? 'en' : 'zh';
-  }
-
-  btn.addEventListener('click', () => {
-    lang = lang === 'en' ? 'zh' : 'en';
-    applyLang();
-  });
-
-  /* ══════════════════════════════════════
-     SCROLL FADE-IN
-  ══════════════════════════════════════ */
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('.about-left, .about-right, .work-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    observer.observe(el);
-  });
-
-  // stagger work cards
-  document.querySelectorAll('.work-card').forEach((el, i) => {
-    el.style.transitionDelay = (i * 0.12) + 's';
-  });
-
-})();
-</script>
-</body>
-</html>
+<!-- WRITING PREVIEW -->
+<section id="writing">
+  <p class="section-label" data-en="003 — writing" data-zh="003 — 写作">003 — writing</p>
+  <div class="post-list">
+    {% assign recent_posts = site.posts | limit: 4 %}
+    {% for post in recent_posts %}
+    <a class="post-card" href="{{ post.url }}">
+      <span class="post-date">{{ post.date | date: "%Y · %m" }}</span>
+      <span class="post-title" data-en="{{ post.title }}"{% if post.title_zh %} data-zh="{{ post.title_zh }}"{% endif %}>{{ post.title }}</span>
+      <span class="post-tags">
+        {% for tag in post.tags %}
+        <span class="post-tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+  <a class="section-cta" href="/writing/" data-en="all writing" data-zh="全部文章">all writing</a>
+</section>

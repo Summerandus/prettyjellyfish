@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% include head.html %}
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<div id="page">
+  {% include nav.html %}
+
+  {{ content }}
+
+  {% include footer.html %}
+</div>
+
+{% include scripts.html %}
+</body>
+</html>

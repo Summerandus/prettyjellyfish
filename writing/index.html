@@ -1,0 +1,124 @@
+---
+layout: base
+title: Writing
+extra_css: |
+  .writing-wrapper {
+    padding: 160px 48px 120px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .writing-header {
+    margin-bottom: 80px;
+  }
+
+  .writing-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .writing-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 80px;
+  }
+
+  .writing-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .post-list { display: flex; flex-direction: column; }
+
+  .post-card {
+    display: flex;
+    align-items: baseline;
+    gap: 40px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.3s;
+  }
+  .post-card:first-child { border-top: 1px solid var(--border); }
+  .post-card:hover { padding-left: 12px; }
+
+  .post-date {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    white-space: nowrap;
+    min-width: 90px;
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .post-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .post-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    opacity: 0.6;
+  }
+
+  .empty-state {
+    padding: 80px 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--text-dim);
+    opacity: 0.4;
+  }
+
+  @media (max-width: 600px) {
+    .writing-wrapper { padding: 120px 20px 80px; }
+    .post-card { gap: 16px; flex-wrap: wrap; }
+    .post-date { min-width: unset; }
+  }
+---
+
+<div class="writing-wrapper">
+  <header class="writing-header">
+    <p class="writing-eyebrow">003 — writing</p>
+    <h1>writing</h1>
+  </header>
+
+  <div class="post-list">
+    {% if site.posts.size > 0 %}
+      {% for post in site.posts %}
+      <a class="post-card" href="{{ post.url }}">
+        <span class="post-date">{{ post.date | date: "%Y · %m" }}</span>
+        <span class="post-title" data-en="{{ post.title }}"{% if post.title_zh %} data-zh="{{ post.title_zh }}"{% endif %}>{{ post.title }}</span>
+        <span class="post-tags">
+          {% for tag in post.tags %}
+          <span class="post-tag">{{ tag }}</span>
+          {% endfor %}
+        </span>
+      </a>
+      {% endfor %}
+    {% else %}
+      <p class="empty-state">— something is being written —</p>
+    {% endif %}
+  </div>
+</div>
