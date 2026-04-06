@@ -7,4 +7,14 @@ order: 3
 coming_soon: true
 ---
 
+<div class="lang-en" markdown="1">
+
 *This project is taking shape.*
+
+</div>
+
+<div class="lang-zh" markdown="1">
+
+*水母正在浮出水面*
+
+</div>
