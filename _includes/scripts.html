@@ -25,10 +25,10 @@
       vy: randBetween(0.00018, 0.00038),
       vx: randBetween(-0.00008, 0.00008),
       r: randBetween(22, 52),
-      alpha: randBetween(0.15, 0.35),
+      alpha: randBetween(0.28, 0.52),
       hue: hue,
-      sat: Math.round(randBetween(55, 70)),
-      lit: Math.round(randBetween(72, 88)),
+      sat: Math.round(randBetween(50, 65)),
+      lit: Math.round(randBetween(65, 80)),
       pulse: randBetween(0, Math.PI * 2),
       pulseSpeed: randBetween(0.012, 0.028),
       driftPhase: randBetween(0, Math.PI * 2),
@@ -59,8 +59,14 @@
     const pulse = 1 + 0.06 * Math.sin(j.pulse);
     const r = j.r * pulse;
 
+    // fade in from bottom (y: 1.0→0.85), fade out with ease-in curve (bright at bottom, drops off toward top)
+    const fadeIn  = Math.min(1, (1.0 - j.y) / 0.15);
+    const fadeOutLinear = Math.max(0, Math.min(1, (j.y + 0.1) / 0.9));
+    const fadeOut = fadeOutLinear * fadeOutLinear; // square: stays bright low, fades fast near top
+    const fade = Math.max(0, Math.min(fadeIn, fadeOut));
+
     ctx.save();
-    ctx.globalAlpha = j.alpha;
+    ctx.globalAlpha = j.alpha * fade;
 
     const col = `hsl(${j.hue}, ${j.sat}%, ${j.lit}%)`;
 
@@ -69,23 +75,23 @@
     ctx.closePath();
 
     const grad = ctx.createRadialGradient(cx, cy - r * 0.3, r * 0.05, cx, cy, r);
-    grad.addColorStop(0, `hsla(${j.hue}, ${j.sat}%, ${Math.min(j.lit + 10, 96)}%, 0.55)`);
-    grad.addColorStop(0.7, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.2)`);
-    grad.addColorStop(1, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.05)`);
+    grad.addColorStop(0, `hsla(${j.hue}, ${j.sat}%, ${Math.min(j.lit + 10, 96)}%, 0.45)`);
+    grad.addColorStop(0.7, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.18)`);
+    grad.addColorStop(1, `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.03)`);
     ctx.fillStyle = grad;
     ctx.fill();
 
-    ctx.strokeStyle = col;
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.5)`;
+    ctx.lineWidth = 0.7;
     ctx.stroke();
 
     ctx.beginPath();
     ctx.arc(cx, cy, r * 0.65, Math.PI, 0, false);
-    ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.3)`;
-    ctx.lineWidth = 0.6;
+    ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.15)`;
+    ctx.lineWidth = 0.5;
     ctx.stroke();
 
-    ctx.lineWidth = 0.7;
+    ctx.lineWidth = 0.6;
     j.tentacles.forEach(ten => {
       const startAngle = Math.PI + ten.angle;
       const ox = cx + r * Math.cos(startAngle);
@@ -102,7 +108,7 @@
       ctx.beginPath();
       ctx.moveTo(ox, oy);
       ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, ex, ey);
-      ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.45)`;
+      ctx.strokeStyle = `hsla(${j.hue}, ${j.sat}%, ${j.lit}%, 0.25)`;
       ctx.stroke();
     });
 
@@ -151,7 +157,7 @@
   }
   animateCursor();
 
-  document.querySelectorAll('a, button, .work-card, .tag').forEach(el => {
+  document.querySelectorAll('a, button, .lab-card, .tag').forEach(el => {
     el.addEventListener('mouseenter', () => {
       ring.style.width = '44px';
       ring.style.height = '44px';
@@ -199,7 +205,7 @@
     });
   }, { threshold: 0.08 });
 
-  document.querySelectorAll('.about-left, .about-right, .work-card, .post-card').forEach(el => {
+  document.querySelectorAll('.about-left, .about-right, .lab-card, .post-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(28px)';
     el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';

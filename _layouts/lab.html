@@ -1,0 +1,44 @@
+---
+layout: default
+---
+<style>
+  /* ── LAB ── */
+  .lab-wrapper { max-width: 900px; margin: 0 auto; padding: 160px 48px 120px; }
+
+  .lab-back { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; display: inline-block; margin-bottom: 60px; }
+  .lab-back::before { content: '← '; }
+  .lab-back:hover { color: var(--accent); }
+
+  .lab-header { margin-bottom: 60px; }
+  .lab-header-meta { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); opacity: 0.6; margin-bottom: 20px; }
+  .lab-header h1 { font-family: var(--font-display); font-size: clamp(40px, 6vw, 80px); font-weight: 300; font-style: italic; color: var(--text); line-height: 1.05; letter-spacing: -0.01em; }
+
+  .lab-cover { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, rgba(168,197,212,0.06) 0%, rgba(168,197,212,0.02) 100%); margin-bottom: 80px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); overflow: hidden; }
+  .lab-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+  .lab-cover-placeholder { font-family: var(--font-display); font-size: 15px; font-style: italic; color: var(--text-dim); opacity: 0.3; letter-spacing: 0.1em; }
+
+  .lab-body { font-family: var(--font-display); font-size: 20px; font-weight: 300; line-height: 1.85; color: var(--text-dim); }
+  .lab-body p { margin-bottom: 1.6em; }
+  .lab-body p:first-child { font-size: 24px; color: var(--text); }
+  .lab-body h2 { font-family: var(--font-display); font-size: 30px; font-weight: 300; font-style: italic; color: var(--text); margin: 2em 0 0.8em; }
+  .lab-body h3 { font-family: var(--font-body); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin: 2em 0 0.8em; }
+  .lab-body blockquote { border-left: 1px solid rgba(168,197,212,0.25); padding-left: 24px; margin: 2em 0; color: var(--accent); font-style: italic; }
+  .lab-body a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(168,197,212,0.3); }
+  .lab-body hr { border: none; border-top: 1px solid var(--border); margin: 3em 0; }
+
+  @media (max-width: 900px) { .lab-wrapper { padding: 120px 32px 80px; } }
+  @media (max-width: 600px) { .lab-wrapper { padding: 100px 20px 60px; } .lab-body { font-size: 18px; } }
+</style>
+
+<div class="lab-wrapper">
+  <a class="lab-back" href="/#lab" data-en="lab" data-zh="实验室">lab</a>
+  <header class="lab-header">
+    <p class="lab-header-meta">{{ page.desc }}</p>
+    <h1 data-en="{{ page.title }}"{% if page.title_zh %} data-zh="{{ page.title_zh }}"{% endif %}>{{ page.title }}</h1>
+  </header>
+  <div class="lab-cover">
+    {% if page.image %}<img src="{{ page.image }}" alt="{{ page.title }}">
+    {% else %}<span class="lab-cover-placeholder">— image coming —</span>{% endif %}
+  </div>
+  <div class="lab-body">{{ content }}</div>
+</div>

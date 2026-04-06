@@ -6,9 +6,9 @@ permalink: /writing/:year/:slug/
 
 # Collections
 collections:
-  work:
+  lab:
     output: true
-    permalink: /work/:slug/
+    permalink: /lab/:slug/
 
 defaults:
   - scope:
@@ -18,9 +18,9 @@ defaults:
       layout: post
   - scope:
       path: ""
-      type: work
+      type: lab
     values:
-      layout: work
+      layout: lab
 
 exclude:
   - README.md

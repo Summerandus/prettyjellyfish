@@ -163,14 +163,14 @@ extra_css: |
     padding: 7px 16px;
   }
 
-  /* ── WORK ── */
-  .work-grid {
+  /* ── LAB ── */
+  .lab-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
 
-  .work-card {
+  .lab-card {
     background: rgba(168,197,212,0.03);
     border: 1px solid var(--border);
     padding: 48px 36px;
@@ -182,7 +182,7 @@ extra_css: |
     color: inherit;
   }
 
-  .work-card::before {
+  .lab-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -192,10 +192,10 @@ extra_css: |
     transition: opacity 0.4s;
   }
 
-  .work-card:hover { background: rgba(168,197,212,0.06); border-color: rgba(168,197,212,0.2); }
-  .work-card:hover::before { opacity: 1; }
+  .lab-card:hover { background: rgba(168,197,212,0.06); border-color: rgba(168,197,212,0.2); }
+  .lab-card:hover::before { opacity: 1; }
 
-  .work-num {
+  .lab-num {
     font-family: var(--font-body);
     font-size: 12px;
     letter-spacing: 0.2em;
@@ -204,7 +204,7 @@ extra_css: |
     opacity: 0.6;
   }
 
-  .work-placeholder {
+  .lab-placeholder {
     width: 100%;
     aspect-ratio: 4/3;
     background: linear-gradient(135deg, rgba(168,197,212,0.04) 0%, rgba(168,197,212,0.02) 100%);
@@ -215,7 +215,7 @@ extra_css: |
     overflow: hidden;
   }
 
-  .work-placeholder span {
+  .lab-placeholder span {
     font-family: var(--font-display);
     font-size: 14px;
     font-style: italic;
@@ -224,7 +224,7 @@ extra_css: |
     letter-spacing: 0.1em;
   }
 
-  .work-placeholder img {
+  .lab-placeholder img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -232,9 +232,9 @@ extra_css: |
     transition: opacity 0.4s;
   }
 
-  .work-card:hover .work-placeholder img { opacity: 0.9; }
+  .lab-card:hover .lab-placeholder img { opacity: 0.9; }
 
-  .work-title {
+  .lab-title {
     font-family: var(--font-display);
     font-size: 24px;
     font-weight: 400;
@@ -243,7 +243,7 @@ extra_css: |
     letter-spacing: 0.02em;
   }
 
-  .work-desc {
+  .lab-desc {
     font-size: 14px;
     letter-spacing: 0.08em;
     color: var(--text-dim);
@@ -327,15 +327,15 @@ extra_css: |
     #hero { padding: 0 32px; padding-top: 100px; }
     .hero-scroll { left: 32px; }
     .about-grid { grid-template-columns: 1fr; gap: 48px; }
-    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .lab-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 600px) {
     section { padding: 64px 20px; }
     #hero { padding: 0 20px; padding-top: 90px; }
     .hero-scroll { left: 20px; bottom: 32px; }
-    .work-grid { grid-template-columns: 1fr; }
-    .work-card { padding: 32px 24px; }
+    .lab-grid { grid-template-columns: 1fr; }
+    .lab-card { padding: 32px 24px; }
     .post-card { gap: 16px; flex-wrap: wrap; }
     .post-date { min-width: unset; }
   }
@@ -378,23 +378,23 @@ extra_css: |
   </div>
 </section>
 
-<!-- WORK -->
-<section id="work">
-  <p class="section-label" data-en="002 — work" data-zh="002 — 作品">002 — work</p>
-  <div class="work-grid">
-    {% assign work_items = site.work | sort: 'order' %}
+<!-- LAB -->
+<section id="lab">
+  <p class="section-label" data-en="002 — lab" data-zh="002 — 实验室">002 — lab</p>
+  <div class="lab-grid">
+    {% assign work_items = site.lab | sort: 'order' %}
     {% for item in work_items %}
-    <a class="work-card" href="{{ item.url }}" {% if item.coming_soon %}style="pointer-events:none"{% endif %}>
-      <p class="work-num">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</p>
-      <div class="work-placeholder">
+    <a class="lab-card" href="{{ item.url }}" {% if item.coming_soon %}style="pointer-events:none"{% endif %}>
+      <p class="lab-num">{{ forloop.index | prepend: '00' | slice: -3, 3 }}</p>
+      <div class="lab-placeholder">
         {% if item.image %}
           <img src="{{ item.image }}" alt="{{ item.title }}">
         {% else %}
           <span data-en="coming soon" data-zh="水母正在浮出水面">coming soon</span>
         {% endif %}
       </div>
-      <p class="work-title" data-en="{{ item.title }}" data-zh="{{ item.title_zh | default: item.title }}">{{ item.title }}</p>
-      <p class="work-desc" data-en="{{ item.desc }}" data-zh="{{ item.desc_zh | default: item.desc }}">{{ item.desc }}</p>
+      <p class="lab-title" data-en="{{ item.title }}" data-zh="{{ item.title_zh | default: item.title }}">{{ item.title }}</p>
+      <p class="lab-desc" data-en="{{ item.desc }}" data-zh="{{ item.desc_zh | default: item.desc }}">{{ item.desc }}</p>
     </a>
     {% endfor %}
   </div>

@@ -9,10 +9,10 @@ prettyjellyfish/
 ├── _layouts/
 │   ├── base.html       # nav, footer, canvas animation, cursor
 │   ├── post.html       # writing article template
-│   └── work.html       # work item template
+│   └── lab.html        # lab item template
 ├── _posts/             # writing — one file per post
 │   └── YYYY-MM-DD-slug.md
-├── _work/              # work items — one file per project
+├── _lab/               # lab items — one file per project
 │   └── project-name.md
 ├── writing/
 │   └── index.html      # all writing page
@@ -38,9 +38,9 @@ You can use **bold**, *italic*, and > blockquotes.
 
 Push to main — it deploys automatically.
 
-## Adding a work item
+## Adding a lab item
 
-Create a file in `_work/` named `project-name.md`:
+Create a file in `_lab/` named `project-name.md`:
 
 ```markdown
 ---
